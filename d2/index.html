@@ -1,0 +1,1163 @@
+<!DOCTYPE html><html class=''>
+<head>
+<meta charset='UTF-8'>
+<meta name="robots" content="noindex">
+<title>The Experiment Factory d2</title>
+
+<script src="jspsych/jquery-3.5.1.min.js"></script>
+<script src="jspsych/jspsych.js"></script>
+<script src="jspsych/plugin-fullscreen.js"></script>
+<script src="jspsych/plugin-preload.js"></script>
+<script src="jspsych/plugin-html-button-response.js"></script>
+<script src="jspsych/plugin-image-button-response.js"></script>
+<script src="jspsych/plugin-image-button-response_modified.js"></script>
+<script src="jspsych/plugin-survey-multi-select.js"></script>
+<link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+</head>
+<script>
+
+/* ************************************ */
+/* Define experimental variables */
+/* ************************************ */
+
+/* define function for calculation of results */
+/* returns for every trial an array with F1, F2 and KL */
+function calculate_results(solution_line, response) {
+  if (response.length === 0) {
+      return [0, 0, 0];
+  } else {
+  const count = response.reduce((acc, value) => {acc[value] = (
+    acc[value] || 0) + 1; 
+    return acc;
+  }, {});
+  const respone_odd = Object.keys(count)
+    .filter(key => count[key] % 2 !== 0)
+    .map(Number);
+  var array = Array(Math.max(...respone_odd) + 1).fill(0);
+  for (const i of respone_odd) {array[i] += 1};
+  const solution = solution_line.slice(0, Math.max(...respone_odd) + 1);
+  const delta = solution.map((value, index) => value - array[index]);
+  const F1 = delta.filter(x => x==1).length;
+  const F2 = delta.filter(x => x==-1).length;
+  const KL = array.length - F1 - F2;
+  return [F1, F2, KL]
+  };
+};
+
+/* define solutions of each trial*/
+const solution_line1 = [1,0,0,0,1,1,0,0,1,0,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0];
+const solution_line2 = [0,1,0,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,0,1,1,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,1,1,1,0,1,0,1,1];
+const solution_line3 = [0,0,1,1,0,0,1,0,1,0,0,0,1,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,1,0,1,0,1,1,1,0,1,0,1];
+const solution_line4 = [1,0,0,0,1,1,0,0,1,0,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0];
+const solution_line5 = [0,1,0,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,0,1,1,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,1,1,1,0,1,0,1,1];
+const solution_line6 = [0,0,1,1,0,0,1,0,1,0,0,0,1,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,1,0,1,0,1,1,1,0,1,0,1];
+const solution_line7 = [1,0,0,0,1,1,0,0,1,0,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0];
+const solution_line8 = [0,1,0,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,0,1,1,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,1,1,1,0,1,0,1,1];
+const solution_line9 = [0,0,1,1,0,0,1,0,1,0,0,0,1,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,1,0,1,0,1,1,1,0,1,0,1];
+const solution_line10 = [1,0,0,0,1,1,0,0,1,0,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0];
+const solution_line11 = [0,1,0,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,0,1,1,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,1,1,1,0,1,0,1,1];
+const solution_line12 = [0,0,1,1,0,0,1,0,1,0,0,0,1,1,0,1,0,1,0,0,1,0,1,0,0,1,0,1,0,0,0,1,0,1,0,0,1,0,1,0,1,1,1,0,1,0,1];
+const solution_line13 = [1,0,0,0,1,1,0,0,1,0,1,1,1,0,1,0,0,0,1,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0];
+const solution_line14 = [0,1,0,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,0,1,1,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,1,1,1,0,1,0,1,1];
+
+
+/* Initialize evaluation variables */
+var F1 = 0;
+var F2 = 0;
+var KL = 0;
+
+/* ************************************ */
+/* Set up jsPsych blocks */
+/* ************************************ */
+
+/* preload images */
+var preload = {
+  type: jsPsychPreload,
+  images: [
+'img/rehearsal/0.png',
+'img/rehearsal/1.png',
+'img/rehearsal/2.png',
+'img/rehearsal/3.png',
+'img/rehearsal/4.png',
+'img/rehearsal/5.png',
+'img/rehearsal/6.png',
+'img/rehearsal/7.png',
+'img/rehearsal/8.png',
+'img/rehearsal/9.png',
+'img/rehearsal/10.png',
+'img/rehearsal/11.png',
+'img/rehearsal/12.png',
+'img/rehearsal/13.png',
+'img/rehearsal/14.png',
+'img/rehearsal/15.png',
+'img/rehearsal/16.png',
+'img/rehearsal/17.png',
+'img/rehearsal/18.png',
+'img/rehearsal/19.png',
+'img/rehearsal/20.png',
+'img/rehearsal/21.png',
+'img/rehearsal/solution.png',
+'img/test1/0.png',
+'img/test1/1.png',
+'img/test1/2.png',
+'img/test1/3.png',
+'img/test1/4.png',
+'img/test1/5.png',
+'img/test1/6.png',
+'img/test1/7.png',
+'img/test1/8.png',
+'img/test1/9.png',
+'img/test1/10.png',
+'img/test1/11.png',
+'img/test1/12.png',
+'img/test1/13.png',
+'img/test1/14.png',
+'img/test1/15.png',
+'img/test1/16.png',
+'img/test1/17.png',
+'img/test1/18.png',
+'img/test1/19.png',
+'img/test1/20.png',
+'img/test1/21.png',
+'img/test1/22.png',
+'img/test1/23.png',
+'img/test1/24.png',
+'img/test1/25.png',
+'img/test1/26.png',
+'img/test1/27.png',
+'img/test1/28.png',
+'img/test1/29.png',
+'img/test1/30.png',
+'img/test1/31.png',
+'img/test1/32.png',
+'img/test1/33.png',
+'img/test1/34.png',
+'img/test1/35.png',
+'img/test1/36.png',
+'img/test1/37.png',
+'img/test1/38.png',
+'img/test1/39.png',
+'img/test1/40.png',
+'img/test1/41.png',
+'img/test1/42.png',
+'img/test1/43.png',
+'img/test1/44.png',
+'img/test1/45.png',
+'img/test1/46.png',
+'img/test2/0.png',
+'img/test2/1.png',
+'img/test2/2.png',
+'img/test2/3.png',
+'img/test2/4.png',
+'img/test2/5.png',
+'img/test2/6.png',
+'img/test2/7.png',
+'img/test2/8.png',
+'img/test2/9.png',
+'img/test2/10.png',
+'img/test2/11.png',
+'img/test2/12.png',
+'img/test2/13.png',
+'img/test2/14.png',
+'img/test2/15.png',
+'img/test2/16.png',
+'img/test2/17.png',
+'img/test2/18.png',
+'img/test2/19.png',
+'img/test2/20.png',
+'img/test2/21.png',
+'img/test2/22.png',
+'img/test2/23.png',
+'img/test2/24.png',
+'img/test2/25.png',
+'img/test2/26.png',
+'img/test2/27.png',
+'img/test2/28.png',
+'img/test2/29.png',
+'img/test2/30.png',
+'img/test2/31.png',
+'img/test2/32.png',
+'img/test2/33.png',
+'img/test2/34.png',
+'img/test2/35.png',
+'img/test2/36.png',
+'img/test2/37.png',
+'img/test2/38.png',
+'img/test2/39.png',
+'img/test2/40.png',
+'img/test2/41.png',
+'img/test2/42.png',
+'img/test2/43.png',
+'img/test2/44.png',
+'img/test2/45.png',
+'img/test2/46.png',
+'img/test3/0.png',
+'img/test3/1.png',
+'img/test3/2.png',
+'img/test3/3.png',
+'img/test3/4.png',
+'img/test3/5.png',
+'img/test3/6.png',
+'img/test3/7.png',
+'img/test3/8.png',
+'img/test3/9.png',
+'img/test3/10.png',
+'img/test3/11.png',
+'img/test3/12.png',
+'img/test3/13.png',
+'img/test3/14.png',
+'img/test3/15.png',
+'img/test3/16.png',
+'img/test3/17.png',
+'img/test3/18.png',
+'img/test3/19.png',
+'img/test3/20.png',
+'img/test3/21.png',
+'img/test3/22.png',
+'img/test3/23.png',
+'img/test3/24.png',
+'img/test3/25.png',
+'img/test3/26.png',
+'img/test3/27.png',
+'img/test3/28.png',
+'img/test3/29.png',
+'img/test3/30.png',
+'img/test3/31.png',
+'img/test3/32.png',
+'img/test3/33.png',
+'img/test3/34.png',
+'img/test3/35.png',
+'img/test3/36.png',
+'img/test3/37.png',
+'img/test3/38.png',
+'img/test3/39.png',
+'img/test3/40.png',
+'img/test3/41.png',
+'img/test3/42.png',
+'img/test3/43.png',
+'img/test3/44.png',
+'img/test3/45.png',
+'img/test3/46.png',
+'img/test4/0.png',
+'img/test4/1.png',
+'img/test4/2.png',
+'img/test4/3.png',
+'img/test4/4.png',
+'img/test4/5.png',
+'img/test4/6.png',
+'img/test4/7.png',
+'img/test4/8.png',
+'img/test4/9.png',
+'img/test4/10.png',
+'img/test4/11.png',
+'img/test4/12.png',
+'img/test4/13.png',
+'img/test4/14.png',
+'img/test4/15.png',
+'img/test4/16.png',
+'img/test4/17.png',
+'img/test4/18.png',
+'img/test4/19.png',
+'img/test4/20.png',
+'img/test4/21.png',
+'img/test4/22.png',
+'img/test4/23.png',
+'img/test4/24.png',
+'img/test4/25.png',
+'img/test4/26.png',
+'img/test4/27.png',
+'img/test4/28.png',
+'img/test4/29.png',
+'img/test4/30.png',
+'img/test4/31.png',
+'img/test4/32.png',
+'img/test4/33.png',
+'img/test4/34.png',
+'img/test4/35.png',
+'img/test4/36.png',
+'img/test4/37.png',
+'img/test4/38.png',
+'img/test4/39.png',
+'img/test4/40.png',
+'img/test4/41.png',
+'img/test4/42.png',
+'img/test4/43.png',
+'img/test4/44.png',
+'img/test4/45.png',
+'img/test4/46.png',
+'img/test5/0.png',
+'img/test5/1.png',
+'img/test5/2.png',
+'img/test5/3.png',
+'img/test5/4.png',
+'img/test5/5.png',
+'img/test5/6.png',
+'img/test5/7.png',
+'img/test5/8.png',
+'img/test5/9.png',
+'img/test5/10.png',
+'img/test5/11.png',
+'img/test5/12.png',
+'img/test5/13.png',
+'img/test5/14.png',
+'img/test5/15.png',
+'img/test5/16.png',
+'img/test5/17.png',
+'img/test5/18.png',
+'img/test5/19.png',
+'img/test5/20.png',
+'img/test5/21.png',
+'img/test5/22.png',
+'img/test5/23.png',
+'img/test5/24.png',
+'img/test5/25.png',
+'img/test5/26.png',
+'img/test5/27.png',
+'img/test5/28.png',
+'img/test5/29.png',
+'img/test5/30.png',
+'img/test5/31.png',
+'img/test5/32.png',
+'img/test5/33.png',
+'img/test5/34.png',
+'img/test5/35.png',
+'img/test5/36.png',
+'img/test5/37.png',
+'img/test5/38.png',
+'img/test5/39.png',
+'img/test5/40.png',
+'img/test5/41.png',
+'img/test5/42.png',
+'img/test5/43.png',
+'img/test5/44.png',
+'img/test5/45.png',
+'img/test5/46.png',
+'img/test6/0.png',
+'img/test6/1.png',
+'img/test6/2.png',
+'img/test6/3.png',
+'img/test6/4.png',
+'img/test6/5.png',
+'img/test6/6.png',
+'img/test6/7.png',
+'img/test6/8.png',
+'img/test6/9.png',
+'img/test6/10.png',
+'img/test6/11.png',
+'img/test6/12.png',
+'img/test6/13.png',
+'img/test6/14.png',
+'img/test6/15.png',
+'img/test6/16.png',
+'img/test6/17.png',
+'img/test6/18.png',
+'img/test6/19.png',
+'img/test6/20.png',
+'img/test6/21.png',
+'img/test6/22.png',
+'img/test6/23.png',
+'img/test6/24.png',
+'img/test6/25.png',
+'img/test6/26.png',
+'img/test6/27.png',
+'img/test6/28.png',
+'img/test6/29.png',
+'img/test6/30.png',
+'img/test6/31.png',
+'img/test6/32.png',
+'img/test6/33.png',
+'img/test6/34.png',
+'img/test6/35.png',
+'img/test6/36.png',
+'img/test6/37.png',
+'img/test6/38.png',
+'img/test6/39.png',
+'img/test6/40.png',
+'img/test6/41.png',
+'img/test6/42.png',
+'img/test6/43.png',
+'img/test6/44.png',
+'img/test6/45.png',
+'img/test6/46.png',
+'img/test7/0.png',
+'img/test7/1.png',
+'img/test7/2.png',
+'img/test7/3.png',
+'img/test7/4.png',
+'img/test7/5.png',
+'img/test7/6.png',
+'img/test7/7.png',
+'img/test7/8.png',
+'img/test7/9.png',
+'img/test7/10.png',
+'img/test7/11.png',
+'img/test7/12.png',
+'img/test7/13.png',
+'img/test7/14.png',
+'img/test7/15.png',
+'img/test7/16.png',
+'img/test7/17.png',
+'img/test7/18.png',
+'img/test7/19.png',
+'img/test7/20.png',
+'img/test7/21.png',
+'img/test7/22.png',
+'img/test7/23.png',
+'img/test7/24.png',
+'img/test7/25.png',
+'img/test7/26.png',
+'img/test7/27.png',
+'img/test7/28.png',
+'img/test7/29.png',
+'img/test7/30.png',
+'img/test7/31.png',
+'img/test7/32.png',
+'img/test7/33.png',
+'img/test7/34.png',
+'img/test7/35.png',
+'img/test7/36.png',
+'img/test7/37.png',
+'img/test7/38.png',
+'img/test7/39.png',
+'img/test7/40.png',
+'img/test7/41.png',
+'img/test7/42.png',
+'img/test7/43.png',
+'img/test7/44.png',
+'img/test7/45.png',
+'img/test7/46.png',
+'img/test8/0.png',
+'img/test8/1.png',
+'img/test8/2.png',
+'img/test8/3.png',
+'img/test8/4.png',
+'img/test8/5.png',
+'img/test8/6.png',
+'img/test8/7.png',
+'img/test8/8.png',
+'img/test8/9.png',
+'img/test8/10.png',
+'img/test8/11.png',
+'img/test8/12.png',
+'img/test8/13.png',
+'img/test8/14.png',
+'img/test8/15.png',
+'img/test8/16.png',
+'img/test8/17.png',
+'img/test8/18.png',
+'img/test8/19.png',
+'img/test8/20.png',
+'img/test8/21.png',
+'img/test8/22.png',
+'img/test8/23.png',
+'img/test8/24.png',
+'img/test8/25.png',
+'img/test8/26.png',
+'img/test8/27.png',
+'img/test8/28.png',
+'img/test8/29.png',
+'img/test8/30.png',
+'img/test8/31.png',
+'img/test8/32.png',
+'img/test8/33.png',
+'img/test8/34.png',
+'img/test8/35.png',
+'img/test8/36.png',
+'img/test8/37.png',
+'img/test8/38.png',
+'img/test8/39.png',
+'img/test8/40.png',
+'img/test8/41.png',
+'img/test8/42.png',
+'img/test8/43.png',
+'img/test8/44.png',
+'img/test8/45.png',
+'img/test8/46.png',
+'img/test9/0.png',
+'img/test9/1.png',
+'img/test9/2.png',
+'img/test9/3.png',
+'img/test9/4.png',
+'img/test9/5.png',
+'img/test9/6.png',
+'img/test9/7.png',
+'img/test9/8.png',
+'img/test9/9.png',
+'img/test9/10.png',
+'img/test9/11.png',
+'img/test9/12.png',
+'img/test9/13.png',
+'img/test9/14.png',
+'img/test9/15.png',
+'img/test9/16.png',
+'img/test9/17.png',
+'img/test9/18.png',
+'img/test9/19.png',
+'img/test9/20.png',
+'img/test9/21.png',
+'img/test9/22.png',
+'img/test9/23.png',
+'img/test9/24.png',
+'img/test9/25.png',
+'img/test9/26.png',
+'img/test9/27.png',
+'img/test9/28.png',
+'img/test9/29.png',
+'img/test9/30.png',
+'img/test9/31.png',
+'img/test9/32.png',
+'img/test9/33.png',
+'img/test9/34.png',
+'img/test9/35.png',
+'img/test9/36.png',
+'img/test9/37.png',
+'img/test9/38.png',
+'img/test9/39.png',
+'img/test9/40.png',
+'img/test9/41.png',
+'img/test9/42.png',
+'img/test9/43.png',
+'img/test9/44.png',
+'img/test9/45.png',
+'img/test9/46.png',
+'img/test10/0.png',
+'img/test10/1.png',
+'img/test10/2.png',
+'img/test10/3.png',
+'img/test10/4.png',
+'img/test10/5.png',
+'img/test10/6.png',
+'img/test10/7.png',
+'img/test10/8.png',
+'img/test10/9.png',
+'img/test10/10.png',
+'img/test10/11.png',
+'img/test10/12.png',
+'img/test10/13.png',
+'img/test10/14.png',
+'img/test10/15.png',
+'img/test10/16.png',
+'img/test10/17.png',
+'img/test10/18.png',
+'img/test10/19.png',
+'img/test10/20.png',
+'img/test10/21.png',
+'img/test10/22.png',
+'img/test10/23.png',
+'img/test10/24.png',
+'img/test10/25.png',
+'img/test10/26.png',
+'img/test10/27.png',
+'img/test10/28.png',
+'img/test10/29.png',
+'img/test10/30.png',
+'img/test10/31.png',
+'img/test10/32.png',
+'img/test10/33.png',
+'img/test10/34.png',
+'img/test10/35.png',
+'img/test10/36.png',
+'img/test10/37.png',
+'img/test10/38.png',
+'img/test10/39.png',
+'img/test10/40.png',
+'img/test10/41.png',
+'img/test10/42.png',
+'img/test10/43.png',
+'img/test10/44.png',
+'img/test10/45.png',
+'img/test10/46.png',
+'img/test11/0.png',
+'img/test11/1.png',
+'img/test11/2.png',
+'img/test11/3.png',
+'img/test11/4.png',
+'img/test11/5.png',
+'img/test11/6.png',
+'img/test11/7.png',
+'img/test11/8.png',
+'img/test11/9.png',
+'img/test11/10.png',
+'img/test11/11.png',
+'img/test11/12.png',
+'img/test11/13.png',
+'img/test11/14.png',
+'img/test11/15.png',
+'img/test11/16.png',
+'img/test11/17.png',
+'img/test11/18.png',
+'img/test11/19.png',
+'img/test11/20.png',
+'img/test11/21.png',
+'img/test11/22.png',
+'img/test11/23.png',
+'img/test11/24.png',
+'img/test11/25.png',
+'img/test11/26.png',
+'img/test11/27.png',
+'img/test11/28.png',
+'img/test11/29.png',
+'img/test11/30.png',
+'img/test11/31.png',
+'img/test11/32.png',
+'img/test11/33.png',
+'img/test11/34.png',
+'img/test11/35.png',
+'img/test11/36.png',
+'img/test11/37.png',
+'img/test11/38.png',
+'img/test11/39.png',
+'img/test11/40.png',
+'img/test11/41.png',
+'img/test11/42.png',
+'img/test11/43.png',
+'img/test11/44.png',
+'img/test11/45.png',
+'img/test11/46.png',
+'img/test12/0.png',
+'img/test12/1.png',
+'img/test12/2.png',
+'img/test12/3.png',
+'img/test12/4.png',
+'img/test12/5.png',
+'img/test12/6.png',
+'img/test12/7.png',
+'img/test12/8.png',
+'img/test12/9.png',
+'img/test12/10.png',
+'img/test12/11.png',
+'img/test12/12.png',
+'img/test12/13.png',
+'img/test12/14.png',
+'img/test12/15.png',
+'img/test12/16.png',
+'img/test12/17.png',
+'img/test12/18.png',
+'img/test12/19.png',
+'img/test12/20.png',
+'img/test12/21.png',
+'img/test12/22.png',
+'img/test12/23.png',
+'img/test12/24.png',
+'img/test12/25.png',
+'img/test12/26.png',
+'img/test12/27.png',
+'img/test12/28.png',
+'img/test12/29.png',
+'img/test12/30.png',
+'img/test12/31.png',
+'img/test12/32.png',
+'img/test12/33.png',
+'img/test12/34.png',
+'img/test12/35.png',
+'img/test12/36.png',
+'img/test12/37.png',
+'img/test12/38.png',
+'img/test12/39.png',
+'img/test12/40.png',
+'img/test12/41.png',
+'img/test12/42.png',
+'img/test12/43.png',
+'img/test12/44.png',
+'img/test12/45.png',
+'img/test12/46.png',
+'img/test13/0.png',
+'img/test13/1.png',
+'img/test13/2.png',
+'img/test13/3.png',
+'img/test13/4.png',
+'img/test13/5.png',
+'img/test13/6.png',
+'img/test13/7.png',
+'img/test13/8.png',
+'img/test13/9.png',
+'img/test13/10.png',
+'img/test13/11.png',
+'img/test13/12.png',
+'img/test13/13.png',
+'img/test13/14.png',
+'img/test13/15.png',
+'img/test13/16.png',
+'img/test13/17.png',
+'img/test13/18.png',
+'img/test13/19.png',
+'img/test13/20.png',
+'img/test13/21.png',
+'img/test13/22.png',
+'img/test13/23.png',
+'img/test13/24.png',
+'img/test13/25.png',
+'img/test13/26.png',
+'img/test13/27.png',
+'img/test13/28.png',
+'img/test13/29.png',
+'img/test13/30.png',
+'img/test13/31.png',
+'img/test13/32.png',
+'img/test13/33.png',
+'img/test13/34.png',
+'img/test13/35.png',
+'img/test13/36.png',
+'img/test13/37.png',
+'img/test13/38.png',
+'img/test13/39.png',
+'img/test13/40.png',
+'img/test13/41.png',
+'img/test13/42.png',
+'img/test13/43.png',
+'img/test13/44.png',
+'img/test13/45.png',
+'img/test13/46.png',
+'img/test14/0.png',
+'img/test14/1.png',
+'img/test14/2.png',
+'img/test14/3.png',
+'img/test14/4.png',
+'img/test14/5.png',
+'img/test14/6.png',
+'img/test14/7.png',
+'img/test14/8.png',
+'img/test14/9.png',
+'img/test14/10.png',
+'img/test14/11.png',
+'img/test14/12.png',
+'img/test14/13.png',
+'img/test14/14.png',
+'img/test14/15.png',
+'img/test14/16.png',
+'img/test14/17.png',
+'img/test14/18.png',
+'img/test14/19.png',
+'img/test14/20.png',
+'img/test14/21.png',
+'img/test14/22.png',
+'img/test14/23.png',
+'img/test14/24.png',
+'img/test14/25.png',
+'img/test14/26.png',
+'img/test14/27.png',
+'img/test14/28.png',
+'img/test14/29.png',
+'img/test14/30.png',
+'img/test14/31.png',
+'img/test14/32.png',
+'img/test14/33.png',
+'img/test14/34.png',
+'img/test14/35.png',
+'img/test14/36.png',
+'img/test14/37.png',
+'img/test14/38.png',
+'img/test14/39.png',
+'img/test14/40.png',
+'img/test14/41.png',
+'img/test14/42.png',
+'img/test14/43.png',
+'img/test14/44.png',
+'img/test14/45.png',
+'img/test14/46.png'
+  ]
+};
+
+/* set fullscreen on */
+var enter_fullscreen = {
+  type: jsPsychFullscreen,
+  fullscreen_mode: true
+}
+
+/* define welcome message trial */
+var welcome = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p>Willkommen zu diesem Experiment.</p>',
+  choices: ['Weiter'],
+  post_trial_gap: 500
+};
+
+/* define instructions trial */
+var instructions = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <p>Sie sehen auf diesem Blatt eine Zeile, in der nur die Buchstaben „d“ und „p“ vorkommen.</p>
+    <p>Jeder dieser Buchstaben kann mit einem-, zwei-, drei- oder vier Strichen markiert sein.</p>
+    <p>Ihre Aufgabe ist, alle d‘s die mit zwei Strichen versehen sind, auszuwählen. </p>
+    <img src='img/do2.png'><img src='img/do1u1.png'><img src='img/du2.png'>
+    <p>Bitte gehen Sie die Übungszeile durch und wählen Sie alle mit zwei Strichen versehenen d‘s aus. Sie haben 20 Sekunden Zeit.</p>`,
+  choices: ['Weiter'],
+  post_trial_gap: 500
+};
+
+
+var rehearsal = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/rehearsal/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 20000,
+
+};
+
+
+/* define  reheasal solution trial */
+var rehearsal_solution = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <p>Hier sehen Sie die richtige Lösung.</p>
+    <img src='img/rehearsal/solution.png'>
+  `,
+  choices: ['Weiter'],
+  post_trial_gap: 500
+};
+
+/* define instruction after rehearsal trial */
+var instructions_rehearsal = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <p>Fangen wir mit der eigentlichen Aufgabe an. </p>
+    <p>Für jede Zeile haben Sie 20 Sekunden Zeit, alle „d‘s“, die mit zwei Strichen versehen sind zu markieren. </p>
+    <p>Bitte bearbeiten Sie die Aufgabe von links nach rechts.</p>
+    <p><strong>Wichtig: Arbeiten Sie bitte so schnell und genau wie möglich!</strong></p>
+  `,
+  choices: ['Weiter'],
+  post_trial_gap: 500
+};
+
+var test1 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test1/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line1, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test2 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test2/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line2, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test3 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test3/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line3, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test4 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test4/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line4, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test5 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test5/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line5, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test6 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test6/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line6, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test7 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test7/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line7, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test8 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test8/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line8, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test9 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test9/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line9, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test10 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test10/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line10, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test11 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test11/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line11, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test12 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test12/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line12, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test13 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test13/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line13, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+var test14 = {
+  type: jsPsychImageButtonResponse2,
+  stimulus: '',
+  choices: ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''],
+  button_html: (choice, choice_index) => `<button class="jspsych-btn" style = "padding: 5px 12px; margin: 6px 5px;"><img src="img/test14/${choice_index}.png" /></button>`,
+  response_ends_trial: false,
+  trial_duration: 21000,
+  grid_columns: 12,	
+  data: {
+    task: 'response'
+  },
+  on_finish: function(data){
+    data.correct = calculate_results(solution_line14, JSON.parse(data.response));
+    F1 += data.correct[0];
+    F2 += data.correct[1];
+    KL += data.correct[2];
+  }
+};
+
+/* define test procedure */
+var test_procedure = {
+  timeline: [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14]
+};
+
+/* define debrief */
+var debrief_block = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p>Danke, dass sie diese Aufgabe ausgefüllt haben.</p>',
+  choices: ['Beenden']
+};
+
+/* initialize jsPsych */
+var jsPsych = initJsPsych({
+
+
+  // on_finish: function() {
+    // jsPsych.data.get().localSave('csv','d2_results.csv');
+  // }
+
+
+        on_finish: function(data){
+
+                 // Serialize the data
+                 var promise = new Promise(function(resolve, reject) {
+                     var data = JSON.stringify(jsPsych.data);
+                     resolve(data);
+                 })
+
+                 promise.then(function(data) {
+
+
+                     $.ajax({
+                         type: "POST",
+                         url: '/save',
+                         data: { "data": data },
+                         success: function(){ document.location = "/next" },
+                         dataType: "application/json",
+
+                         // Endpoint not running, local save
+                         error: function(err) {
+
+                             if (err.status == 200){
+                                 document.location = "/next";
+                             } else {
+                                 // If error, assue local save
+                                 jsPsych.data.localSave('d2_results.csv', 'csv');
+                             }
+                         }
+                     });
+                 })
+             }
+
+
+});
+
+/* create timeline */
+var timeline = [];
+timeline.push(enter_fullscreen);
+timeline.push(welcome);
+timeline.push(preload);
+timeline.push(instructions);
+timeline.push(rehearsal);
+timeline.push(rehearsal_solution);
+timeline.push(instructions_rehearsal);
+timeline.push(test_procedure);
+timeline.push(debrief_block);
+
+/* start the experiment */
+jsPsych.run(timeline);
+
+</script>
+</html>
+

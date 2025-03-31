@@ -1,0 +1,30 @@
+{
+	"name": "Aufmerksamkeits-Belastungs-Test D2",
+	"template":"javascript",
+	"exp_id": "d2",
+	"url":"none yet",
+	"contributors": [
+		"Lena Alshut"
+	], 
+	"run": [
+		  "jspsych/jquery-3.5.1.min.js",
+		  "jspsych/plugin-preload.js",
+		  "jspsych/plugin-survey-multi-select.js",
+		  "jspsych/plugin-image-button-response_modified.js",
+		  "jspsych/plugin-fullscreen.js",
+		  "jspsych/jspsych.js",
+		  "jspsych/plugin-instructions.js",
+		  "jspsych/plugin-html-button-response.js",
+		  "jspsych/plugin-image-button-response.js",
+		  "jspsych/jspsych.css"
+	],
+	"time":25,
+	"reference": ["scientific publication"],
+	"publish":"False",
+	"notes": "notes we want to add",
+	"description": "",
+	"instructions": "follow instructions on screen"
+}
+
+
+
