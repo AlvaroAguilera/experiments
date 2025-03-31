@@ -1,0 +1,28 @@
+{
+	"name": "Space Adventure Task - Uncertain Planet",
+	"template":"javascript",
+	"exp_id": "SAT_UP",
+	"url":"none yet",
+	"contributors": [
+		"Sia Ivova Hranova; sia.hranova@tu-dresden.de",
+		"Lorenz Goenner; lorenz.goenner@tu-dresden.de",
+		"Sophia-Helen Sass; sophia-helen.sass@tu-dresden.de",
+		"Michael N. Smolka; michael.smolka@tu-dresden.de"
+	], 
+	"run": [
+		"js/jquery-3.5.1.min.js",
+		"js/experiment.js",
+		"js/parameters.js",
+		"style.css"
+	],
+	"time":60,
+	"reference": ["not published yet (April 2025)"],
+	"publish":"False",
+	"notes": "Language: English",
+	"description": "a probabilistic sequential decision-making task to test the influence of planning costs on planning depth",
+	"instructions": "follow instructions on screen"
+}
+
+
+
+

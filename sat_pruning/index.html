@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class=''>
+<!-- test -->
+<head>
+    <meta charset='UTF-8'>
+    <title>Space Adventure Planning Depth New</title>
+</head>
+
+<body>
+    <script src='js/jquery-3.5.1.min.js'></script>
+    <script type="text/javascript" src="config_task.json"></script>
+
+    <script src='js/parameters.js'></script>
+    <script src='js/experiment.js'></script>
+    <link rel="stylesheet" href="style.css">
+    <div id="screen">
+        
+        <div id="intro-1" class="text-aligned">
+            <p>Welcome to the Space Adventure game! </p>
+            <br><br>
+            <p>Today you will have the opportunity to take part in a journey through space.</p>
+            <p>On your journey, you will be controlling a spaceship and visiting different planetary systems</p>
+            <p>with the goal of collecting as many points as possible.</p><br>
+            <p><strong>The more points you collect, the more money you will get for your participation!</strong></p>
+            <br>
+            <p>Before you start, the following tutorial will teach you everything you need to play the Space Adventure game,</p>
+            <p>such as how to move the spaceship, how the planetary systems work and other game rules.</p>
+            <br>
+            <p>Please press the <strong>right arrow key</strong> to continue or the <strong>left arrow key</strong> to go back one page.</p>
+            <img src="src/arrow_keys.png" alt="" class="img-instr-small">
+
+        </div>
+        
+        <div id="intro-2" class="text-aligned inactive">
+            <p>In each game trial you will visit a new planetary system.</p><br><br>
+            <p>A planetary system will always consist of 6 planets</p>
+            <p>and an example is shown on the next instructions page.</p><br><br><br>
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+        
+        <div id="intro-planets" class="text-nonaligned inactive">
+            <p id="p-top" class="top inactive">You will be able to guide the yellow spaceship shown below to different planets.</p>
+            <p class="bottom">Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+        
+        <div id="intro-3" class="text-aligned inactive"> 
+             <p>There are different types of planets (indicated by colour).</p><br>
+            <p>Some planet types will give you points and others will make you lose points when you land on them (as shown below).</p><br>
+            <div>
+                <img src="src/planet_points.png" alt="", class="img-instr-small">
+            </div>
+            <p>Your goal is to collect as many points as possible.</p><br>
+
+            <p>A blue bar at the top of the screen will show you the amount of points you have already gathered to help you keep track.</p>
+            <p>You can see the points bar on the next intruction screen.</p><br><br>
+            
+            <p>The bar will turn red if you are running low on points</p>
+            <p>and the game will terminate if you run out of points completely.</p><br><br>
+
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+
+        </div>
+        
+        <div id="intro-points" class="text-nonaligned inactive">
+            <p class="bottom">Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+
+        <div id="intro-4" class="text-aligned inactive"> 
+            <p>There are two ways in which you can travel to different planets.</p>
+
+            <p>You can either go <strong>one step in the clockwise direction</strong> by pressing the <strong>M-key</strong> on your keyboard</p>
+            <p>or you can go <strong>two steps in the clockwise direction</strong> (i.e. to a not directly adjacent planet) by pressing the <strong>X-key.</strong></p>
+            <div><img src="src/task_commands_x_jump.png" alt="" class='img-instr-small'></div>
+            <div><img src="src/move_keys.png" alt="" class='img-instr-small'></div>
+
+
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+
+        </div>
+        
+        
+        <div id="intro-5" class="text-aligned inactive">
+
+
+            <p>To get used to this you will now get to practice moving the rocket one step in the clockwise direction <strong>(M-key).</strong></p>
+            
+            <p>Please try this command a few times by repeatedly pressing the M-key in the next instruction screen.</p>
+
+            <p>Please always press the M-key with your <strong>right index finger.</strong></p><br><br>
+
+
+            <p>The next instructions will show automatically when you have done this enough times.</p><br><br>
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+
+        </div>
+        <div id="score-clockwise" class="text-nonaligned inactive">
+            <p class="score-display">-2</p>
+        </div>
+    
+        <div id="wrong-key-clockwise" class="text-aligned display-over inactive">
+            <p class="center">Please press the M-key.</p>
+        </div>
+        
+        
+        <div id="screen-jump-1" class="text-aligned inactive">
+        </div>
+        
+        <div id="screen-jump-2" class="text-aligned inactive">
+            <p>You will now also get to practice moving the rocket two steps in the clockwise direction <strong>(X-key)</strong></p>
+            <p>Please try this command a few times by repeatedly pressing the X-key in the next instruction screen.</p>
+
+            <p>Please always press the X-key with your <strong>left index finger.</strong></p><br><br>
+
+            <p>The next instructions will show automatically when you have done this enough times.</p><br><br>
+            <p>Please press the right arrow key to continue.</p>
+        </div>
+        
+        <div id="wrong-key-move" class="text-aligned inactive">
+            <p class="center">Please press the M-key.</p>
+        </div>
+
+        <div id="wrong-key-jump" class="text-aligned inactive">
+            <p class="center">Please press the X-key.</p>
+        </div>
+       
+       
+
+        <div id="jump-uncertainty-1" class="text-aligned inactive">
+            <p>You just learned how to to navigate to different planets.</p><br>
+            <p>You will now learn that landing on a planet can sometimes be affected by cosmic conditions.</p><br>
+            <p>On most planets in a planetary system the landing conditions are ideal.</p>
+            <p>So, your spaceship will be able to land reliably on the target planet you are heading for.</p><br>
+            <p>However, in every planetary system there is also one planet that is surrounded by an asteroid storm.</p>
+            <p>You can always see clearly see which planet is affected. An example is shown on the next instruction screen.</p><br><br>
+            <p>Please press the right arrow to continue.</p>
+    
+        </div>
+    
+        <div id="jump-uncertainty-2" class="text-aligned inactive">
+            <p>Landing on this planet is more difficult because of the asteroid storm.</p>
+            <p>Therefore, the rocket might sometimes miss the target planet</p>
+            <p>and instead land on one of the two directly adjacent planets.</p><br>
+            <p>So, if you try and go to a planet with asteroids, please remember</p>
+            <p>that you will not always reach the location you planned to go to.</p><br><br>
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+    
+        <div id="jump-uncertainty-3" class="text-aligned inactive">
+            <p>Here you see an example of where the rocket might land if you go forward</p>
+            <p>one step (picture to the left) or two steps (picture to the right) in order to reach a planet with asteroids.</p><br>
+            <p>The solid arrows show the target planet and</p>
+            <p>the dashed arrows show you where the rocket might land if the target is missed.</p>
+            <div>
+                <img src="src/asteroids_miss_move.png" alt="" class="img-instr-small" style="padding-right:8vh">
+                <img src="src/asteroids_miss_jump.png" alt="" class="img-instr-small">
+            </div>
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+    
+        
+        <div id="missed-target" class="text-aligned inactive">
+            <p style="color:red">Target missed.</p>
+        </div>
+    
+    
+        <div id="jump-uncertainty-5" class="text-aligned inactive">
+            <p>To give you a feel for how reliable landing in an asteroid storm is, you can try this out a few times in the next instruction screen,</p>
+            <p>where you have to repeatedly go forward one or two step in order to reach the planet with the asteroids.</p><br><br>
+
+            <p>Be aware that the chance of missing the target planet in an asteroid storm does not change throughout the game.</p>
+            
+            <br>
+            
+            <p>Please press the right arrow key to start the practice or the left arrow key to go back one page.</p>
+
+        </div>
+
+
+        <div id="turns" class="inactive text-aligned">
+            <p>One last thing you need to know:</p>
+            <p>In each new planetary system you can travel to 3 planets and you have to try to collect as much points as possible on the journey.</p> 
+            <p>The number of green squares in the centre of the screen shows you how many planets you can still visit before moving to a new planetary system.</p>
+
+            <div>
+                <img class="img-instr-small" src="src/turns.png" alt="">
+            </div>
+
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+    
+        <div id="summary" class="inactive text-aligned">
+            <p>To summarize:</p><br>
+            <p>Your task is to collect as many points as possible by travelling from planet to planet.</p>
+            <p>You can travel either one (M-key) or two steps (X-key) in the clockwise direction.</p>
+            <p>Different planet types can bring or make you lose points.</p>
+            <div>
+                <img src="src/planet_points.png" alt="", class="img-instr-small">
+            </div>
+            <p>The bar at the top of the screen shows you how many points you currently have.</p>
+            <p>In each planetary system, there is one planet that is surrounded by an asteroid storm</p>
+            <p>which makes landing on that planet more difficult.</p>
+            <p>This can sometimes cause you to land on one of its neighbouring planets instead of the target planet.</p><br>
+
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+    
+        <div id="tip-1" class="text-aligned inactive">
+            <p>One important tip:</p>
+            <p>It will help you a lot in the task if you plan all 3 of your travel steps in advance.</p>
+            <p>Example: Imagine you start in the planet constellation given below. </p>
+
+            <div><img class="img-instr-small" src="src/Tipp_1.png" alt=""></div>
+            <p>If you plan only two moves in advance, you would move forward one step to the +20 planet and then</p>
+            <p>move two steps forward to the +10 planet. However, then you would be forced to travel to one of the red planets (-20) and in total earn only 10 points.</p><br>
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+    
+        <div id="tip-2" class="text-aligned inactive">
+
+
+            <p>So, in this planetary system it would have been better to lose a smaller amount of points first </p>
+            <p>by going one step to the -10 planet and then travel to the +10 planet.</p>
+
+            <img class="img-instr-small" src="src/Tipp_2.png" alt="" class="img-instr">
+            <p>In total you would have gained 20 points by doing this.</p>
+        </div>
+
+        <div id="intro-practice-start" class="text-aligned inactive">
+            <p>You will now practice a whole game trial.</p>
+            <p>Please plan your 3 travel steps in advance so that you get as many points as possible but</p>
+            <p>do not enter new travelling commands while the rocket is still moving.</p>
+            <p>The rocket has to land first before you can input your next action.</p><br>
+            <p>You can always take as much time as you need to plan your journey.</p><br>
+            <p>There is no asteroid storm in these sample runs for simplicity. </p>
+            <p>Don't forget to press the M-key with your <strong>right index finger</strong> and the X-key with your <strong>left index finger</strong>.</p>
+            <br><br>
+            <p>Please press the right arrow key to continue or the left arrow key to go back one page.</p>
+        </div>
+    
+        <div id="optimal" class="inactive text-aligned">
+            <p>Perfect, you found the best route!</p>
+
+        </div>
+    
+
+        <div id="not-optimal" class="inactive text-aligned">
+            <p>There is still a better route. Please try again.</p>
+
+        </div>
+
+    
+        <div id="not-optimal-2" class="inactive text-aligned">
+            <p>That was still not the best route. Please try one more time!</p>
+        </div>
+
+        <div id="not-optimal-3" class="inactive text-aligned">
+            <p>That was still not exactly right..</p><br>
+            <p>Please press the right arrow key to see the best route.</p>
+
+        </div>
+
+        <div id="optimal-route" class="inactive text-aligned">
+            <p>The best route is:</p>
+        </div>
+        <div id="intro-complete" class="text-aligned inactive">
+            <p>Congratulations! You have new learned everything you need to know for your Space Adventure!</p>
+
+            <p>Please press the right arrow key to continue.</p>
+        </div>
+    
+        <!-- instruction screens for main part  -->
+        <div id='main-intro-text' class='text-aligned inactive'>
+            <p class="second-p">The Space Adventure game can now begin.</p>
+            <p class="third-p">Press the right arrow key to start the real experiment.</p>      
+        </div>
+    
+        <div id="main-intro-text-gameover" class="inactive text-aligned">
+            <p>Das Training Spiel ist zu Ende.</p>
+            <p>Ihre Training Treibstoffreserven sind aufgebraucht.</p><br><br>
+            <p>Ihr Weltraumabenteuer kann nun beginnen.</p><br><br><br>
+            <p>Drücken Sie die rechte Pfeiltaste, um fortzufahren.</p>   
+    
+        </div>
+        
+        <div id="main-transition-text" class='text-aligned inactive'> 
+            <p>You are moving to a new planetary system...</p>
+        </div>
+        
+
+        <div id="block-transition" class='text-aligned inactive'> 
+            <p>Please take a bit of time to rest in case you feel tired....</p>
+            <br>
+
+            <p>Press the right arrow key to continue the experiment.</p>
+
+        </div>
+    
+        <div id="end-game" class="inactive text-aligned">
+            <p>The experiment is now over.</p>
+            <p>Thank you for your participation.</p>
+            <br><br>
+            <p>Please press the right arrow key to finish the experiment.</p>
+        </div> 
+    
+        <div id='game-container' class="">
+                <div id="rocket" class="inactive" data-pos='0'></div>
+                <div id="pointBox" class="inactive" data-points="0"></div>
+                
+                <div id="planets" class="inactive">
+                    <div id="planet1" class="planet p1" data-planet-img="1"></div>
+                    <div id="planet2" class="planet p2" data-planet-img="3"></div>
+                    <div id="planet3" class="planet p3" data-planet-img="2"></div>
+                    <div id="planet4" class="planet p4" data-planet-img="2"></div>
+                    <div id="planet5" class="planet p5" data-planet-img="4"></div>
+                    <div id="planet6" class="planet p6" data-planet-img="5"></div>
+                </div>
+                
+                <div id="squares-wrapper" class ="inactive">
+                    <div id="square1" class="square"></div>
+                    <div id="square2" class="square"></div>
+                    <div id="square3" class="square"></div>
+                </div>
+                
+                <div id="points-wrapper" class="inactive">
+                    <div id="points-filling">
+                        <div id="red-points-filling"></div>
+                    </div>
+                </div>
+        </div>
+    
+        <div id="game-over-main" class="text-aligned inactive">
+            <p>The game is over.</p>
+            <p>Unfortunately you ran out of fuel.</p>
+            <p>Thank you for your particpation!</p>
+            <br><br>
+            <p>Please press the right-arrow key to finish the experiment.</p>
+        </div> 
+    </div>
+
+    <div style="
+    position: fixed;
+    bottom: 0;
+    transform: translateY(-100%);
+    z-index: 0;
+    opacity: 0;
+    ">
+    <img src="src/rocket.png" style="position:absolute">
+    <img src="src/planet_1.png" style="position:absolute">
+    <img src="src/planet_2.png" style="position:absolute">
+    <img src="src/planet_3.png" style="position:absolute">
+    <img src="src/planet_4.png" style="position:absolute">
+    <img src="src/planet_5.png" style="position:absolute">
+    <img src="src/debris.png" style="position:absolute">
+    <img src="src/planet_points.png" style="position:absolute">
+    <img src="src/Reisemuster_Vorlage_2.png" style="position:absolute">
+    <img src="src/asteroids_miss_jump.png" style="position:absolute">
+    <img src="src/asteroids_miss_move.png" style="position:absolute">
+    <img src=" " alt="">
+    </div>
+    
+</body>
+</html>
