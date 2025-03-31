@@ -1,0 +1,23 @@
+{
+	"name": "Mehrfachwahl-Wortschatztest-B",
+	"template":"javascript",
+	"exp_id": "mwtb",
+	"url":"none yet",
+	"contributors": [
+		"Lena Alshut"
+	], 
+	"run": [
+	   "jspsych/jquery-3.5.1.min.js",
+		"jspsych/plugin-html-keyboard-response.js",
+		"jspsych/plugin-fullscreen.js",
+		"jspsych/jspsych.js",
+		"jspsych/plugin-html-button-response.js",
+		"jspsych/jspsych.css"
+	],
+	"time":25,
+	"reference": ["scientific publication"],
+	"publish":"False",
+	"notes": "notes we want to add",
+	"description": "a task inferring habit tendency",
+	"instructions": "follow instructions on screen"
+}

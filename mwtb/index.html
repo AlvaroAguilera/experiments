@@ -1,0 +1,597 @@
+<!DOCTYPE html><html class=''>
+<head>
+<meta charset='UTF-8'>
+<meta name="robots" content="noindex">
+<title>The Experiment Factory MWT-B</title>
+
+<script src="jspsych/jquery-3.5.1.min.js"></script>
+<script src="jspsych/jspsych.js"></script>
+<script src="jspsych/plugin-html-keyboard-response.js"></script>
+<script src="jspsych/plugin-fullscreen.js"></script>
+<script src="jspsych/plugin-html-button-response.js"></script>
+<script src="jspsych/plugin-preload.js"></script>
+<link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+</head>
+<script>
+
+/* set fullscreen on */
+var enter_fullscreen = {
+  type: jsPsychFullscreen,
+  fullscreen_mode: true
+}
+
+/* define welcome message trial */
+var welcome = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p>Willkommen zu diesem Experiment.</p>',
+  choices: ['Weiter'],
+  post_trial_gap: 500
+};
+
+var instructions = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: `
+    <p>Sie sehen hier mehrere Reihen mit Wörtern. In jeder Reihe steht nur ein Wort, das Ihnen vielleicht bekannt ist.</p>
+    <p>Wenn Sie es gefunden haben, klicken Sie es bitte an. Wenn Sie unsicher sind oder keines der Worte kennen, dann raten Sie.</p>
+    <p>Es gibt kein Zeitlimit für diese Aufgabe. Bitte entscheiden Sie möglichst spontan.</p>`,
+  choices: ['Weiter'],
+  post_trial_gap: 500
+};
+
+/* define test trials 1-37 */
+var test1 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ['Nale', 'Sahe', 'Nase', 'Nesa', 'Sehna'],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test2 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ['Funktion', 'Kuntion', 'Finzahm', 'Tuntion', 'Tunktion'],
+  data: {
+    task: 'response',
+    correct_response: 0
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test3 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Struk", "Streik", "Sturk", "Strek", "Kreik"],
+  data: {
+    task: 'response',
+    correct_response: 1
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test4 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Kulinse", "Kulerane", "Kulisse", "Klubihle", "Kubistane"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test5 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Kenekel", "Gesonk", "Kelume", "Gelenk", "Gelerge"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test6 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["siziol", "salzahl", "sozihl", "sziam", "sozial"],
+  data: {
+    task: 'response',
+    correct_response: 4
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test7 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Sympasie", "Symmofeltrie", "Symmantrie", "Symphonie", "Symlanie"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test8 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Umma", "Pamme", "Nelle", "Ampe", "Amme"],
+  data: {
+    task: 'response',
+    correct_response: 4
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test9 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Krusse", "Surke", "Krustelle", "Kruste", "Struke"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test10 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Kirse", "Sirke", "Krise", "Krospe", "Serise"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test11 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Tinxur", "Kukutur", "Fraktan", "Tinktur", "Rimsuhr"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test12 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Unfision", "Fudision", "Infusion", "Syntusion", "Nuridion"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test13 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Feudasmus", "Fonderismus", "Föderalismus", "Födismus", "Föderasmus"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test14 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Redor", "Radium", "Terion", "Dramin", "Orakium"],
+  data: {
+    task: 'response',
+    correct_response: 1
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test15 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["kentern", "knerte", "kanzen", "kretern", "trekem"],
+  data: {
+    task: 'response',
+    correct_response: 0
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test16 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Kantate", "Rakante", "Kenture", "Krutehne", "Kallara"],
+  data: {
+    task: 'response',
+    correct_response: 0
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test17 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["schlaieren", "waschieren", "wakieren", "schackieren", "kaschieren"],
+  data: {
+    task: 'response',
+    correct_response: 4
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test18 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Tuhl", "Lar", "Lest", "Dall", "Lid"],
+  data: {
+    task: 'response',
+    correct_response: 4
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test19 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Dissonanz", "Diskrisanz", "Distranz", "Dinotanz", "Siodenz"],
+  data: {
+    task: 'response',
+    correct_response: 0
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test20 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Ferindo", "Inferno", "Orfina", "Firanetto", "Imfindio"],
+  data: {
+    task: 'response',
+    correct_response: 1
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test21 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Rilkiase", "Kilister", "Riliker", "Klistier", "Linkure"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test22 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["kurinesisch", "kulinarisch", "kumensisch", "kulissarisch", "kannasrisch"],
+  data: {
+    task: 'response',
+    correct_response: 1
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test23 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Rosto", "Torso", "Soro", "Torgos", "Tosor"],
+  data: {
+    task: 'response',
+    correct_response: 1
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test24 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Kleiber", "Beikel", "Keibel", "Reikler", "Biekerl"],
+  data: {
+    task: 'response',
+    correct_response: 0
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test25 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Ralke", "Korre", "Ruckse", "Recke", "Ulte"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test26 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Lamone", "Talane", "Matrone", "Tarone", "Malonte"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test27 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Tuma", "Umat", "Maut", "Taum", "Muta"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test28 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Sorekin", "Sarowin", "Rosakin", "Narosin", "Kerosin"],
+  data: {
+    task: 'response',
+    correct_response: 4
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test29 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Beralen", "gerältet", "anälteren", "untären", "verbrämen"],
+  data: {
+    task: 'response',
+    correct_response: 4
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test30 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Kapaun", "Paukan", "Naupack", "Aupeck", "Ankepran"],
+  data: {
+    task: 'response',
+    correct_response: 0
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test31 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Sickaber", "Bassiker", "Kassiber", "Sassiker", "Askiber"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test32 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Pucker", "Keuper", "Eucker", "Reuspeck", "Urkane"],
+  data: {
+    task: 'response',
+    correct_response: 1
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test33 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Spirine", "Saprin", "Parsin", "Purin", "Asprint"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test34 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Kulon", "Solgun", "Koskan", "Soran", "Klonus"],
+  data: {
+    task: 'response',
+    correct_response: 4
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test35 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Adept", "Padget", "Edapt", "Epatt", "Taped"],
+  data: {
+    task: 'response',
+    correct_response: 0
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test36 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Gendelat", "Tingerat", "Indigenat", "Nitgessar", "Ringelaar"],
+  data: {
+    task: 'response',
+    correct_response: 2
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+var test37 = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '',
+  choices: ["Berkizia", "Brekzie", "Birakzie", "Brikazie", "Bakiria"],
+  data: {
+    task: 'response',
+    correct_response: 3
+  },
+  on_finish: function(data){
+    data.correct = data.response == data.correct_response;
+  }
+};
+
+/* define test procedure */
+var test_procedure = {
+  timeline: [test1, test2, test3, test4, test5, test6, test7, test8, test9, 
+  test10, test11, test12, test13, test14, test15, test16, test17, test18, test19, 
+  test20, test21, test22, test23, test24, test25, test26, test27, test28, test29,
+  test30, test31, test32, test33, test34, test35, test36, test37]
+};
+
+/* define debrief */
+var debrief_block = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p>Danke, dass sie diese Aufgabe ausgefüllt haben.</p>',
+  choices: ['Beenden']
+};
+
+/* initialize jsPsych */
+var jsPsych = initJsPsych({
+
+
+
+  // on_finish: function() {
+    // jsPsych.data.get().localSave('csv','mwtb_results.csv');
+  // }
+
+
+          on_finish: function(data){
+
+                 // Serialize the data
+                 var promise = new Promise(function(resolve, reject) {
+                     var data = JSON.stringify(jsPsych.data);
+                     resolve(data);
+                 })
+
+                 promise.then(function(data) {
+
+
+                     $.ajax({
+                         type: "POST",
+                         url: '/save',
+                         data: { "data": data },
+                         success: function(){ document.location = "/next" },
+                         dataType: "application/json",
+
+                         // Endpoint not running, local save
+                         error: function(err) {
+
+                             if (err.status == 200){
+                                 document.location = "/next";
+                             } else {
+                                 // If error, assue local save
+                                 jsPsych.data.localSave('mwtb_results.csv', 'csv');
+                             }
+                         }
+                     });
+                 })
+             }
+
+
+
+});
+
+/* create timeline */
+var timeline = [];
+timeline.push(enter_fullscreen);
+timeline.push(welcome);
+timeline.push(instructions);
+timeline.push(test_procedure);
+timeline.push(debrief_block);
+
+/* start the experiment */
+jsPsych.run(timeline);
+
+</script>
+</html>
+
